@@ -81,11 +81,61 @@ public class TicTacToe {
         }
     }
 
+    //Проверка по у
+    public boolean checkY(GUESS player) {
+
+        for (int i = 0; i < map.length; i++) {
+            if(map[i][0] == player && map[i][1] == player && map[i][2] == player) {
+                gameOver(player);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //Проверка по х
+    public boolean checkX(GUESS player) {
+
+        for (int i = 0; i < map.length; i++) {
+            if(map[0][i] == player && map[1][i] == player && map[2][i] == player) {
+                gameOver(player);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //Диагональ
+    public boolean checkD(GUESS player) {
+        for (int i = 0; i < map.length; i++) {
+            if( map[0][0] == player && map[1][1] == player && map[2][2] == player ||
+                    map[2][0] == player && map[1][1] == player && map[0][2] == player ) {
+                gameOver(player);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public void gameOver(GUESS player) {
+        System.out.println("Игра окончена");
+        System.out.println("Выиграл игрок " + player);
+    }
+
     public void startGame() {
         while(!isGameOver) {
             printField();
             playerGuess();
+            isGameOver = checkD(GUESS.X) || checkX(GUESS.X) || checkY(GUESS.X);
+            if(isGameOver) {
+                break;
+            }
             aiGuess();
+            isGameOver = checkD(GUESS.Y) || checkX(GUESS.Y) || checkY(GUESS.Y);
+            if(isGameOver) {
+                break;
+            }
         }
     }
 }
